@@ -1,7 +1,7 @@
 package com.example.banking.domain;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Customer {
 	private final String identityNo;
 	private String fullname;
-	private final Map<String, Account> accounts = new HashMap<>();
+	private final Map<String, Account> accounts = new LinkedHashMap<>();
 
 	public Customer(String identityNo, String fullname) {
 		Objects.requireNonNull(identityNo);
