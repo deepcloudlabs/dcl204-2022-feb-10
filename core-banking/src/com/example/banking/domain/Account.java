@@ -6,7 +6,7 @@ public class Account extends Object {
 	// 1) attribute/state/data/field
 	// information hiding
 	private final String iban; // instance var.
-	private double balance;
+	protected double balance;
 
 	// 2) methods
 	// i. constructors
