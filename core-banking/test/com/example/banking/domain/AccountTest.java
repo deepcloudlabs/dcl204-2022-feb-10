@@ -1,10 +1,9 @@
 package com.example.banking.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
@@ -93,4 +92,10 @@ class AccountTest {
 		// test tear-down
 	}
 
+	@Test
+	void testDoubleComparison() throws Exception {
+		double money = 4.35;
+		money = 100.0 * money; // FPU
+		assertEquals(435.0, money, 0.000001);
+	}
 }
