@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 // Entity -> Identity
 public class Customer {
@@ -32,6 +33,11 @@ public class Customer {
 		return identityNo;
 	}
 
+	public Optional<Account> findAccountByIban(
+			String iban){
+		return Optional.ofNullable(accounts.get(iban));
+	}
+	
 	public Collection<Account> getAccounts() {
 		return List.copyOf(accounts.values());
 	}
@@ -72,4 +78,11 @@ public class Customer {
 				.filter( acc -> acc.getBalance() == 0.0)
 				.toList();
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [identityNo=" + identityNo + ", fullname=" + fullname + "]";
+	}
+	
+	
 }
