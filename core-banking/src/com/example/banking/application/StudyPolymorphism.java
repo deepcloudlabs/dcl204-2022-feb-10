@@ -4,6 +4,7 @@ import com.example.banking.domain.Account;
 import com.example.banking.domain.CheckingAccount;
 import com.example.banking.domain.SavingsAccount;
 
+@SuppressWarnings("unused")
 public class StudyPolymorphism {
 
 	public static void main(String[] args) {

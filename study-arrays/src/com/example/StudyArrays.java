@@ -1,8 +1,11 @@
 package com.example;
 
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.function.ToIntFunction;
 import java.util.stream.Stream;
 
+@SuppressWarnings("unused")
 public class StudyArrays {
 
 	public static void main(String[] args) {
@@ -36,11 +39,18 @@ public class StudyArrays {
 		}
 		System.out.println("sum: "+sum);
 		// Functional Programming
+		final int z = 42;
+		Predicate<Integer> ifEven = 
+				num -> num%2 == 0;
+		ToIntFunction<Integer> squared = num -> num*num;
+		
 		sum =
 		Stream.of(numbers3)
+		      .parallel()
 		      .flatMap(Stream::of)
-		      .filter( num -> num%2 == 0)
-		      .mapToInt( num -> num*num)
+		      .filter( ifEven )
+		      .mapToInt( squared )
+		      .sequential()
 		      .sum();
 		System.out.println("sum: "+sum);
 		

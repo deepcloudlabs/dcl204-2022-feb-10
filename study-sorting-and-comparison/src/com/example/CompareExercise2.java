@@ -2,6 +2,7 @@ package com.example;
 
 public class CompareExercise2 {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		// Base: 2, 8, 10, 16
 		int x1 = 547; // base 10
