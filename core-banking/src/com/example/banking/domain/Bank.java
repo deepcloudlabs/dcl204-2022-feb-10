@@ -34,4 +34,12 @@ public class Bank {
 		customers.add(customer);
 		return customer;
 	}
+	
+	public void hesapIsletimUcretiAl(double islemUcreti) {
+		for (Customer customer : customers) {
+			for (Account account : customer.getAccounts()) {
+				account.withdraw(islemUcreti);	
+			}
+		}
+	}
 }

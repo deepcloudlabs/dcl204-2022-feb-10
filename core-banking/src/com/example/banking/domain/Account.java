@@ -38,6 +38,7 @@ public class Account extends Object {
 	}
 
 	public boolean withdraw(double amount) {
+		System.out.println("Account::withdraw");
 		// validation
 		if (amount <= 0.0)
 			return false;
