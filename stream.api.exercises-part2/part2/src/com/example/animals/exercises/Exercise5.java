@@ -18,6 +18,9 @@ public class Exercise5 {
 		// Find the total number of legs
 		List<Animal> animals = Arrays.asList(new Cat(), new Spider(), new Cat("Tekir"), new Fish("Free Willy"),
 				new Spider(), new Fish("Jaws"));
-		
+		var totalLegs = animals.stream()
+				               .mapToLong(Animal::getLegs)
+				               .sum();
+		System.out.println(totalLegs);
 	}
 }

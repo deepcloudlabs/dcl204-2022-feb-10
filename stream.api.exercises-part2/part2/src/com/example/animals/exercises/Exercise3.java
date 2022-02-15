@@ -1,6 +1,7 @@
 package com.example.animals.exercises;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import com.example.animals.domain.Animal;
@@ -18,6 +19,8 @@ public class Exercise3 {
 		// Find the animal with the highest number of legs
 		List<Animal> animals = Arrays.asList(new Cat(), new Spider(), new Cat("Tekir"), new Fish("Free Willy"),
 				new Spider(), new Fish("Jaws"));
-		
+		animals.stream()
+		       .max(Comparator.comparing(Animal::getLegs))
+		       .ifPresent(System.out::println);
 	}
 }

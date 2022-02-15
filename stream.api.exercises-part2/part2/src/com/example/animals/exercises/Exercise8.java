@@ -18,6 +18,11 @@ public class Exercise8 {
 		// Count the number of species
 		List<Animal> animals = Arrays.asList(new Cat(), new Spider(), new Cat("Tekir"), new Fish("Free Willy"),
 				new Spider(), new Fish("Jaws"));
-		
+		var numOfSpecies = 
+		animals.stream()
+		       .map(Animal::getClass)
+		       .distinct()
+		       .count();
+		System.out.println(numOfSpecies);
 	}
 }
