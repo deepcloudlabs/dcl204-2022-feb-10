@@ -1,6 +1,7 @@
 package com.example;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Exercise01 {
 
@@ -20,7 +21,18 @@ public class Exercise01 {
 			        new ProgrammingLanguage(Language.KOTLIN, 9, 8)					
 			),18_000, 12, Gender.FEMALE)					
 		);
-
+		Predicate<ProgrammingLanguage> isJava = 
+				lang -> lang.getLanguage()
+				.equals(Language.JAVA);
+		Predicate<Developer> knowsJava = 
+				developer -> {
+					return developer.getLanguages()
+					                      .stream()
+					                      .anyMatch(isJava);
+				};
+		var javaDevelopers = developers.stream()
+				                       .filter(knowsJava)
+				                       .toList();
 	}
 
 }
