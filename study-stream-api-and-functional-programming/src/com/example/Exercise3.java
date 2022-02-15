@@ -32,13 +32,14 @@ public class Exercise3 {
 		ToDoubleFunction<DeveloperLanguage> toSalary =
 			devLang -> devLang.developer().getSalary();	
 		var developerSalaryStatisticsByLanguage = 
-		developers.stream()
-		          .map(developer -> developer.getLanguages()
+		developers.stream() // Stream<Developer>
+		          .map((Developer developer) -> developer.getLanguages()
                       .stream()
                       .map(ProgrammingLanguage::getLanguage)
                       .map(lang -> new DeveloperLanguage(developer,lang))
                       .toList()
-	           ).flatMap(List::stream)
+	           ) // Stream<List<DeveloperLanguage>>
+		       .flatMap(List::stream) // Stream<DeveloperLanguage>
 	           .collect(
 	        	   Collectors.groupingBy(
 	        		     DeveloperLanguage::language,
