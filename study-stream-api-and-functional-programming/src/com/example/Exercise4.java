@@ -30,6 +30,8 @@ public class Exercise4 {
 		meyveler.stream()
 		        .filter(meyve -> meyve.matches("^k[a-zşğüçöı]*z$"))
 	            .forEach( System.out::println);
+		meyveler.stream().mapToLong(meyve -> meyve.length()).sum();
+		meyveler.stream().mapToLong(String::length).sum();
 	}
 
 }
