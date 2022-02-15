@@ -27,6 +27,34 @@ public class Exercise4 {
 						System.out.println(meyve);
 					}
 		        });
+		
+		meyveler.stream()
+		.filter((String meyve) -> {
+				return meyve.matches("^k[a-zşğüçöı]*z$");
+			}
+		)
+		.forEach((String meyve) -> {
+				System.out.println(meyve);
+		});
+		
+		meyveler.stream()
+		.filter((meyve) -> {
+			return meyve.matches("^k[a-zşğüçöı]*z$");
+		}
+				)
+		.forEach((meyve) -> {
+			System.out.println(meyve);
+		});
+		
+		meyveler.stream()
+		.filter(meyve -> {
+			return meyve.matches("^k[a-zşğüçöı]*z$");
+		}
+				)
+		.forEach(meyve -> {
+			System.out.println(meyve);
+		});
+		
 		meyveler.stream()
 		        .filter(meyve -> meyve.matches("^k[a-zşğüçöı]*z$"))
 	            .forEach( System.out::println);
