@@ -1,6 +1,7 @@
 package com.example.banking.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,4 +43,26 @@ public class Bank {
 			}
 		}
 	}
+
+	public double getTotalBalance() {
+		return customers.stream()
+				        .mapToDouble(Customer::getBalance)
+		                .sum();
+	}
+	
+	public long getAccountNumber(Class<? extends Account> clazz) {
+		return customers.stream()
+				.map(Customer::getAccounts)
+				.flatMap(Collection::stream)
+				.filter(clazz::isInstance)
+				.count();
+	}
+	
+	public long getTotalNumberOfAccounts() {
+		return customers.stream()
+				.map(Customer::getAccounts)
+				.mapToLong(Collection::size)
+				.sum();
+	}
+	
 }

@@ -1,6 +1,7 @@
 package com.example.banking.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,9 +30,9 @@ class AccountTest {
 		// test fixture/setup
 		var acc = new Account(iban, balance);
 		// call exercise method -> mut
-		var result = acc.deposit(amount);
+		assertThrows(IllegalArgumentException.class,
+			() ->acc.deposit(amount));
 		// verification
-		assertFalse(result);
 		assertEquals(balance, acc.getBalance());
 		// test tear-down
 	}
@@ -42,11 +43,8 @@ class AccountTest {
 	void depositWithPoisitiveAmountShouldSuccess(String iban, double balance, double amount, double newBalance) {
 		// test fixture/setup
 		var acc = new Account(iban, balance);
-		// call exercise method
-		var result = acc.deposit(amount);
-		// verification
-		assertTrue(result);
-		assertEquals(newBalance, acc.getBalance());
+		// call exercise method + verification
+		assertEquals(newBalance, acc.deposit(amount));
 		// test tear-down
 	}
 
@@ -57,9 +55,8 @@ class AccountTest {
 		// test fixture/setup
 		var acc = new Account(iban, balance);
 		// call exercise method -> mut
-		var result = acc.deposit(amount);
-		// verification
-		assertFalse(result);
+		assertThrows(IllegalArgumentException.class,
+				() -> acc.withdraw(amount) );
 		assertEquals(balance, acc.getBalance());
 		// test tear-down
 	}
@@ -67,14 +64,12 @@ class AccountTest {
 	@ParameterizedTest
 	@CsvFileSource(resources = "withdraw-success.csv")
 	@DisplayName("Withdraw Under Balance should success")
-	void withdrawUnderBalanceShouldSuccess(String iban, double balance, double amount, double newBalance) {
+	void withdrawUnderBalanceShouldSuccess(String iban, double balance, double amount, double newBalance) 
+			 throws Exception {
 		// test fixture/setup
 		var acc = new Account(iban, balance);
 		// call exercise method
-		var result = acc.withdraw(amount);
-		// verification
-		assertTrue(result);
-		assertEquals(newBalance, acc.getBalance());
+		assertEquals(newBalance, acc.withdraw(amount));
 		// test tear-down
 	}
 
@@ -85,9 +80,9 @@ class AccountTest {
 		// test fixture/setup
 		var acc = new Account(iban, balance);
 		// call exercise method
-		var result = acc.withdraw(amount);
+		assertThrows(InsufficientBalanceException.class,
+			() ->	acc.withdraw(amount) );
 		// verification
-		assertFalse(result);
 		assertEquals(balance, acc.getBalance());
 		// test tear-down
 	}

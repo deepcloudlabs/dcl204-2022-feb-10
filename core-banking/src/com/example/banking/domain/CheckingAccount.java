@@ -18,13 +18,18 @@ public class CheckingAccount extends Account {
 	}
 
 	@Override
-	public boolean withdraw(double amount) {
+	public double withdraw(double amount) 
+			throws InsufficientBalanceException {
 		System.out.println("CheckingAccount::withdraw");
-		if (amount <= 0) return false;
+		if (amount <= 0) 
+			throw new IllegalArgumentException(
+					"amount must be positive.");
 		if (amount > balance + overdraftAmount)
-			return false;
+			throw new InsufficientBalanceException(
+					"Your balance does not cover your expenses.",
+					amount-balance-overdraftAmount);
 		balance = balance - amount;
-		return true;
+		return balance;
 	}
 	
 }
