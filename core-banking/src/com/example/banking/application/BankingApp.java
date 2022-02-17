@@ -6,10 +6,11 @@ import java.util.function.Consumer;
 import com.example.banking.domain.Account;
 import com.example.banking.domain.Bank;
 import com.example.banking.domain.Customer;
+import com.example.banking.domain.InsufficientBalanceException;
 
 @SuppressWarnings("unused")
 public class BankingApp {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InsufficientBalanceException {
 		var myBank = new Bank("my bank");
 		
 		var jack = myBank.addCustomer("11111111110", 
@@ -42,7 +43,13 @@ public class BankingApp {
 		      .ifPresent( // Higher-Order Function
 		    	printCustomerInfo.andThen(
 		    		cust -> cust.findAccountByIban("tr12")
-		    		            .ifPresent(acc -> acc.withdraw(10_000))
+		    		            .ifPresent(acc -> {
+									try {
+										acc.withdraw(10_000);
+									} catch (InsufficientBalanceException e) {
+										e.printStackTrace();
+									}
+								})
 		        )
 		       );
 		System.out.println(jack.getBalance());

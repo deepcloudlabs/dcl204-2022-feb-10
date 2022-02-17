@@ -39,7 +39,11 @@ public class Bank {
 	public void hesapIsletimUcretiAl(double islemUcreti) {
 		for (Customer customer : customers) {
 			for (Account account : customer.getAccounts()) {
-				account.withdraw(islemUcreti);	
+				try {
+					account.withdraw(islemUcreti);
+				} catch (InsufficientBalanceException e) {
+					account.setStatus(AccountStatus.BLOCKED);
+				}	
 			}
 		}
 	}

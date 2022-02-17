@@ -7,6 +7,7 @@ import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+@SuppressWarnings("unused")
 public class StudyResourceBundle {
 
 	public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package com.example.banking.domain;
 
+@SuppressWarnings("serial")
 public class InsufficientBalanceException extends Exception {
 
 	private final double deficit;

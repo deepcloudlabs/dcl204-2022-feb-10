@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
 
+@SuppressWarnings("unused")
 public class StudyStringAndLocale {
 
 	public static void main(String[] args) {

@@ -8,16 +8,17 @@ public class Account extends Object {
 	private final String iban; // instance var.
 	double balance;
 	private AccountStatus status = AccountStatus.ACTIVE; // 0: ACTIVE, 1: CLOSED, 2: BLOCKED
-
+	private static int numOfAccounts = 0; 
 	// 2) methods
 	// i. constructors
-	public Account(String iban) {
+	public Account(final String iban) {
 		this(iban, 0.0);
 	}
 
-	public Account(String iban, double balance) {
+	public Account(final String iban,final double balance) {
 		this.iban = iban;
 		this.balance = balance;
+		this.numOfAccounts++;
 	}
 
 	// getter
@@ -27,11 +28,15 @@ public class Account extends Object {
 		return iban;
 	}
 
+	public static int getNumOfAccounts() {
+		return numOfAccounts;
+	}
+
 	public AccountStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(AccountStatus status) {
+	public void setStatus(final AccountStatus status) {
 		this.status = status;
 	}
 
@@ -40,7 +45,7 @@ public class Account extends Object {
 	}
 
 	// business method
-	public double deposit(double amount) {
+	public double deposit(final double amount) {
 		// validation
 		if (amount <= 0.0)
 			throw new IllegalArgumentException(
@@ -49,7 +54,7 @@ public class Account extends Object {
 		return balance;
 	}
 
-	public double withdraw(double amount) 
+	public double withdraw(final double amount) 
 			throws InsufficientBalanceException {
 		System.out.println("Account::withdraw");
 		// validation
