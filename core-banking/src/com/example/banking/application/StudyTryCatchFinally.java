@@ -1,7 +1,5 @@
 package com.example.banking.application;
 
-import java.io.FileNotFoundException;
-
 public class StudyTryCatchFinally {
 
 	public static void main(String[] args) {

@@ -2,11 +2,13 @@ package com.example.banking.application;
 
 import static com.example.banking.application.F.getValue;
 
+@SuppressWarnings("static-access")
 public class StudyStatic {
 
 	public static void main(String[] args) {
 		F f = null;
 		System.out.println(((F)null).getValue());
+		System.out.println(f.getValue());
 		System.out.println(getValue());
 	}
 

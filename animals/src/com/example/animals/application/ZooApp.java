@@ -9,6 +9,7 @@ import com.example.animals.domain.Fish;
 import com.example.animals.domain.Pet;
 import com.example.animals.domain.Spider;
 
+@SuppressWarnings("unused")
 public class ZooApp {
 
 	public static void main(String[] args) {

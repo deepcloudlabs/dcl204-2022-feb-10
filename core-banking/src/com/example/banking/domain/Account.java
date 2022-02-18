@@ -18,7 +18,7 @@ public class Account extends Object {
 	public Account(final String iban,final double balance) {
 		this.iban = iban;
 		this.balance = balance;
-		this.numOfAccounts++;
+		numOfAccounts++;
 	}
 
 	// getter
