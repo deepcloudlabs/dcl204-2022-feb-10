@@ -3,8 +3,8 @@ package com.example.banking.domain;
 public class SavingsAccount extends Account {
 	private double interestRate;
 
-	public SavingsAccount(String iban, double balance, double interestRate) {
-		super(iban, (1.0 + 0.01 * interestRate) * balance);
+	public SavingsAccount(String iban, Money balance, double interestRate) {
+		super(iban, Money.valueOf((1.0 + 0.01 * interestRate) * balance.getDoubleValue(),balance.getCurrency()));
 		this.interestRate = interestRate;
 	}
 

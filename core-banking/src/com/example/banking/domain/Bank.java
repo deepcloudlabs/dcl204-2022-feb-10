@@ -3,6 +3,7 @@ package com.example.banking.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Bank {
@@ -36,7 +37,7 @@ public class Bank {
 		return customer;
 	}
 	
-	public void hesapIsletimUcretiAl(double islemUcreti) {
+	public void hesapIsletimUcretiAl(Money islemUcreti) {
 		for (Customer customer : customers) {
 			for (Account account : customer.getAccounts()) {
 				try {
@@ -48,9 +49,11 @@ public class Bank {
 		}
 	}
 
-	public double getTotalBalance() {
+	public double getTotalBalance(FiatCurrency currency) {
+		Objects.requireNonNull(currency);
 		return customers.stream()
-				        .mapToDouble(Customer::getBalance)
+				        .map(customer -> customer.getBalance(currency))
+				        .mapToDouble(Money::getDoubleValue)
 		                .sum();
 	}
 	

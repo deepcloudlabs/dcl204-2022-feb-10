@@ -13,27 +13,27 @@ class AccountTest {
 	@ParameterizedTest
 	@CsvFileSource(resources = "accounts.csv")
 	@DisplayName("Creating an account successfuly")
-	void creatingAnAccountShouldSuccess(String iban, double balance) {
+	void creatingAnAccountShouldSuccess(String iban, double balance,String currency) {
 		// test fixture/setup
 		// call exercise method: constructor
-		var acc = new Account(iban, balance);
+		var acc = new Account(iban, Money.valueOf(balance,FiatCurrency.valueOf(currency)));
 		// verification
 		assertEquals(iban, acc.getIban());
-		assertEquals(balance, acc.getBalance());
+		assertEquals(balance, acc.getBalance().getDoubleValue());
 		// test tear-down
 	}
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "deposit-negative.csv")
 	@DisplayName("Deposit with negative amount should fail")
-	void depositWithNegativeAmountShouldFail(String iban, double balance, double amount) {
+	void depositWithNegativeAmountShouldFail(String iban, double balance, String accountCurrency,double amount,String amountCurrency) {
 		// test fixture/setup
-		var acc = new Account(iban, balance);
+		var acc = new Account(iban, Money.valueOf(balance,FiatCurrency.valueOf(accountCurrency)));
 		// call exercise method -> mut
 		assertThrows(IllegalArgumentException.class,
-			() ->acc.deposit(amount));
+			() ->acc.deposit(Money.valueOf(amount,FiatCurrency.valueOf(amountCurrency))));
 		// verification
-		assertEquals(balance, acc.getBalance());
+		assertEquals(balance, acc.getBalance().getDoubleValue());
 		// test tear-down
 	}
 
@@ -44,7 +44,7 @@ class AccountTest {
 		// test fixture/setup
 		var acc = new Account(iban, balance);
 		// call exercise method + verification
-		assertEquals(newBalance, acc.deposit(amount));
+		assertEquals(newBalance, acc.deposit(Money.valueOf(amount, FiatCurrency.TL)).getDoubleValue());
 		// test tear-down
 	}
 
@@ -56,8 +56,8 @@ class AccountTest {
 		var acc = new Account(iban, balance);
 		// call exercise method -> mut
 		assertThrows(IllegalArgumentException.class,
-				() -> acc.withdraw(amount) );
-		assertEquals(balance, acc.getBalance());
+				() -> acc.withdraw(Money.valueOf(amount, FiatCurrency.TL)) );
+		assertEquals(balance, acc.getBalance().getDoubleValue());
 		// test tear-down
 	}
 
@@ -69,7 +69,7 @@ class AccountTest {
 		// test fixture/setup
 		var acc = new Account(iban, balance);
 		// call exercise method
-		assertEquals(newBalance, acc.withdraw(amount));
+		assertEquals(newBalance, acc.withdraw(Money.valueOf(amount, FiatCurrency.TL)).getDoubleValue());
 		// test tear-down
 	}
 
@@ -81,9 +81,9 @@ class AccountTest {
 		var acc = new Account(iban, balance);
 		// call exercise method
 		assertThrows(InsufficientBalanceException.class,
-			() ->	acc.withdraw(amount) );
+			() ->	acc.withdraw(Money.valueOf(amount, FiatCurrency.TL)) );
 		// verification
-		assertEquals(balance, acc.getBalance());
+		assertEquals(balance, acc.getBalance().getDoubleValue());
 		// test tear-down
 	}
 

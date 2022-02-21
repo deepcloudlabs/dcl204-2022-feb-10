@@ -1,29 +1,28 @@
 package com.example.banking.domain;
 
-// Entity -> Persistent, identity
 public class Account extends Object {
-	// members:
-	// 1) attribute/state/data/field
-	// information hiding
-	private final String iban; // instance var.
-	double balance;
+	private final String iban;
+	Money balance;
 	private AccountStatus status = AccountStatus.ACTIVE; // 0: ACTIVE, 1: CLOSED, 2: BLOCKED
 	private static int numOfAccounts = 0; 
-	// 2) methods
-	// i. constructors
+
 	public Account(final String iban) {
 		this(iban, 0.0);
 	}
 
 	public Account(final String iban,final double balance) {
 		this.iban = iban;
+		this.balance = Money.valueOf(balance, FiatCurrency.TL);
+		numOfAccounts++;
+	}
+	
+	public Account(final String iban,final Money balance) {
+		this.iban = iban;
 		this.balance = balance;
 		numOfAccounts++;
 	}
 
 	// getter
-	
-	
 	public String getIban() {
 		return iban;
 	}
@@ -40,33 +39,27 @@ public class Account extends Object {
 		this.status = status;
 	}
 
-	public double getBalance() {
+	public Money getBalance() {
 		return balance;
 	}
 
 	// business method
-	public double deposit(final double amount) {
-		// validation
-		if (amount <= 0.0)
-			throw new IllegalArgumentException(
-					"amount must be positive.");
-		this.balance += amount;
+	public Money deposit(final Money amount) {
+		if (amount.isLessThanOrEqualTo(0.0))
+			throw new IllegalArgumentException("Deposit amount must be positive");
+		this.balance = this.balance.plus(amount);
 		return balance;
 	}
 
-	public double withdraw(final double amount) 
-			throws InsufficientBalanceException {
-		System.out.println("Account::withdraw");
-		// validation
-		if (amount <= 0.0)
-			throw new IllegalArgumentException(
-					"amount must be positive.");
+	public Money withdraw(final Money amount) throws InsufficientBalanceException {
+		if (amount.isLessThanOrEqualTo(0.0))
+			throw new IllegalArgumentException("Withdraw amount must be positive");
 		// business rule
-		if (amount > balance)
+		if (balance.isLessThan(amount))
 			throw new InsufficientBalanceException(
 				"Your balance does not cover your expenses.",
-				amount-balance);
-		this.balance -= amount;
+				amount.minus(balance));
+		this.balance = this.balance.minus(amount);
 		return balance;
 	}
 

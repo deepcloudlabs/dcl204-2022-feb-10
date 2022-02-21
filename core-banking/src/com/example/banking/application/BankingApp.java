@@ -1,12 +1,16 @@
 package com.example.banking.application;
 
-import java.util.Comparator;
+import static java.util.Comparator.comparing;
+
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import com.example.banking.domain.Account;
 import com.example.banking.domain.Bank;
 import com.example.banking.domain.Customer;
+import com.example.banking.domain.FiatCurrency;
 import com.example.banking.domain.InsufficientBalanceException;
+import com.example.banking.domain.Money;
 
 @SuppressWarnings("unused")
 public class BankingApp {
@@ -34,7 +38,7 @@ public class BankingApp {
 			System.out.println(cus.get());
 			var cusAcc = cus.get().findAccountByIban("tr12");
 			if (cusAcc.isPresent()) { // guard
-				cusAcc.get().withdraw(10_000);
+				cusAcc.get().withdraw(Money.valueOf(10_000,FiatCurrency.TL));
 			}
 		}
 		Consumer<Customer> printCustomerInfo = 
@@ -45,14 +49,14 @@ public class BankingApp {
 		    		cust -> cust.findAccountByIban("tr12")
 		    		            .ifPresent(acc -> {
 									try {
-										acc.withdraw(10_000);
+										acc.withdraw(Money.valueOf(10_000,FiatCurrency.TL));
 									} catch (InsufficientBalanceException e) {
 										e.printStackTrace();
 									}
 								})
 		        )
 		       );
-		System.out.println(jack.getBalance());
+		System.out.println(jack.getBalance(FiatCurrency.TL));
 		System.out.println(jack.getNumberOfNotEmptyAccounts());
 		jack.getAccounts().forEach(System.err::println);
 		jack.getEmptyAccounts().forEach(jack::dropAccount);
@@ -63,9 +67,11 @@ public class BankingApp {
 //	        .sorted( (acc1,acc2) -> acc1.getBalance() > acc2.getBalance() ? -1 : +1)
 //	        .forEach(System.err::println);
 
+		Function<Account,Money> balanceExtractor = Account::getBalance;
 		jack.getAccounts().stream().parallel()
-				.sorted(Comparator.comparing(Account::getBalance).thenComparing(Account::getIban).reversed())
-				.sequential().forEach(System.err::println);
+				.sorted(comparing(balanceExtractor.andThen(Money::getDoubleValue)).thenComparing(Account::getIban).reversed())
+				.sequential()
+				.forEach(System.err::println);
 
 	}
 }

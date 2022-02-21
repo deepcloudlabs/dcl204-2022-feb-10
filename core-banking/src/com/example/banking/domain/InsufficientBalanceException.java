@@ -3,14 +3,14 @@ package com.example.banking.domain;
 @SuppressWarnings("serial")
 public class InsufficientBalanceException extends Exception {
 
-	private final double deficit;
+	private final Money deficit;
 
-	public InsufficientBalanceException(String message, double deficit) {
+	public InsufficientBalanceException(String message, Money deficit) {
 		super(message);
 		this.deficit = deficit;
 	}
 
-	public double getDeficit() {
+	public Money getDeficit() {
 		return deficit;
 	}
 
