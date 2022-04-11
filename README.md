@@ -13,4 +13,3 @@ Sıkıştırılmış dosyayı **C:\\** dizinine açtıktan sonra dizin yapısı 
 ![Installation folder](DEVEL-stage.png?raw=true "C: drive after decompress DEVEL-stage.javase18.zip")
 
 Diskinizdeki dizin yapısını yukarıdaki ile karşılaştırarak kontrol ediniz. **C:** sürücünüzün dolu dolması durumunda farklı bir sürücüye sıkıştırılmış dosyayı açabilirsiniz. Ancak bu durumda bir kaç konfigürasyon dosyasında değişiklik yapmanız gerekecektir. Lütfen, eğitim sırasında bu değişikliklerin neler olduğunu eğitmeninize sorunuz. 
-
